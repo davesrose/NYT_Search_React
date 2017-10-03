@@ -1,11 +1,37 @@
 import React, { Component } from "react";
 import Search from "./Search";
-import ArticleDetail from "./ArticleDetail";
 import API from "../utils/API";
+const moment = require("moment");
 
 const titleStyle = {
   "color" : "white",
   "background-color" : "#20315A"
+}
+
+const floatLeftHead = {
+  "float" : "left",
+  "padding" : "0px",
+  "height" : "0px",
+  "margin-top" : "-5px"
+}
+
+const floatLeft = {
+  "float" : "left",
+}
+
+const floatRightHead = {
+  "float" : "right",
+  "padding" : "0px",
+  "height" : "0px",
+  "margin-top" : "-5px"
+}
+
+const floatRight = {
+  "float" : "right"
+}
+
+const clear = {
+  "clear" : "both"
 }
 
 class NYTContainer extends Component {
@@ -19,14 +45,14 @@ class NYTContainer extends Component {
     this.searchArticles("US News");
   }
 
-  searchArticles = (query, startYear, endYear) => {
-    API.search(query, startYear, endYear)
+  searchArticles = (query) => {
+    API.search(query)
       .then(res => {
         const data = [];
         for (let i = 0; i < 5; i++) {
           data.push(res.data.response.docs[i])
         }
-
+        this.setState({ search: "", startYear: "", endYear: "" })
         this.setState({ result: data });
       })
       .catch(err => console.log(err));
@@ -44,6 +70,7 @@ class NYTContainer extends Component {
   // When the form is submitted, search the OMDB API for the value of `this.state.search`
   handleFormSubmit = event => {
     event.preventDefault();
+    if (this.state.startYear && this.state.endYear) this.state.search = this.state.search+`&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}0101`
     this.searchArticles(this.state.search);
   };
 
@@ -84,11 +111,39 @@ class NYTContainer extends Component {
             <div className="panel panel-primary">
 
               <div className="panel-heading">
-                <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Top Articles</strong></h3>
+                <h3 className="panel-title" id="results"><strong><i className="fa fa-table"></i>   Top Articles</strong></h3>
               </div>
+                {console.log(this.state.result)}
+                {this.state.result.length ? (
+                  <div>
+                    {this.state.result.map(article => (
+                      <div className="panel-body" id="well-section">
+                        <div className="well">
 
-              {console.log(this.state.result)}
-              <ArticleDetail results={this.state.result} />
+                          <h3 style={floatLeftHead}>{article.headline.main}</h3><h4 style={floatRightHead}>{article.pub_date = moment(article.pub_date).format('MMMM Do YYYY, h:mm A')}</h4>
+                          
+                          <div style={clear}></div>
+
+                          <hr />
+
+                          <a href={article.web_url} style={floatLeft} target="_blank">{article.web_url}</a><button className="btn btn-primary" style={floatRight}>Save</button>          
+
+                          <div style={clear}></div>
+
+                        </div>
+                      </div>
+
+                    ))}
+                  </div>
+                ) : (
+
+                  <div className="panel-body" id="well-section">
+                    <div className="well">
+
+                    </div>
+                  </div>
+
+                )}
               
             </div>
 

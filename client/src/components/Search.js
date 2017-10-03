@@ -18,12 +18,12 @@ const Search = props =>
 
       <div className="form-group">
         <label>Start Year (Optional):</label>
-        <input type="text" className="form-control" id="start-year" />
+        <input type="text" className="form-control" id="start-year" value={props.startYear} placeholder="YYYY" onChange={props.handleInputChange} name="startYear" />
       </div>
 
       <div className="form-group">
         <label>End Year (Optional):</label>
-        <input type="text" className="form-control" id="end-year" />
+        <input type="text" className="form-control" id="end-year" value={props.endYear} placeholder="YYYY"onChange={props.handleInputChange} name="endYear" />
       </div>
 
       <button type="submit" className="btn btn-default" id="run-search" onClick={props.handleFormSubmit}><i className="fa fa-search"></i> Search</button>
