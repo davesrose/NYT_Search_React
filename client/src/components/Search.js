@@ -27,7 +27,6 @@ const Search = props =>
       </div>
 
       <button type="submit" className="btn btn-default" id="run-search" onClick={props.handleFormSubmit}><i className="fa fa-search"></i> Search</button>
-      <button type="button" className="btn btn-default" id="clear-all" onClick={this.clearForm}><i className="fa fa-trash"></i> Clear Results</button>
 
     </form>;
 

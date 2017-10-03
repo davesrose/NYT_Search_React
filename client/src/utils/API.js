@@ -3,5 +3,14 @@ const BASEURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-ke
 export default {
   search: function(query) {
     return axios.get(BASEURL + query);
+  },
+  saveArticle: function(articleData) {
+  	return axios.post("/api/saved", articleData);
+  },
+  getArticles: function() {
+  	return axios.get("/api/saved");
+  },
+  deleteArticle: function(id) {
+  	return axios.post("/api/saved/"+id);
   }
 };

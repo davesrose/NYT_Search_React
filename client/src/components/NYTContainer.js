@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Search from "./Search";
 import API from "../utils/API";
+import Saved from "./Saved";
+
 const moment = require("moment");
 
 const titleStyle = {
@@ -37,6 +39,7 @@ const clear = {
 class NYTContainer extends Component {
   state = {
     result: {},
+    articleData: [],
     search: ""
   };
 
@@ -66,13 +69,22 @@ class NYTContainer extends Component {
     });
   };
 
-
   // When the form is submitted, search the OMDB API for the value of `this.state.search`
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.startYear && this.state.endYear) this.state.search = this.state.search+`&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}0101`
     this.searchArticles(this.state.search);
   };
+
+  saveArticle = data => {
+    console.log(data);
+    //console.log(this.state.articleData);
+    API.saveArticle({
+      //title : this.state.result.headline.main,
+      //date : this.state.result.pub_date,
+      //url : this.state.result.web_url
+    })
+  }
 
   render() {
     return (
@@ -116,7 +128,9 @@ class NYTContainer extends Component {
                 {console.log(this.state.result)}
                 {this.state.result.length ? (
                   <div>
-                    {this.state.result.map(article => (
+                    {this.state.result.map(article => {
+                      
+                      return (
                       <div className="panel-body" id="well-section">
                         <div className="well">
 
@@ -126,14 +140,15 @@ class NYTContainer extends Component {
 
                           <hr />
 
-                          <a href={article.web_url} style={floatLeft} target="_blank">{article.web_url}</a><button className="btn btn-primary" style={floatRight}>Save</button>          
+                          <a href={article.web_url} style={floatLeft} target="_blank">{article.web_url}</a><button className="btn btn-primary" style={floatRight} onClick={this.saveArticle} >Save</button>          
 
                           <div style={clear}></div>
 
                         </div>
                       </div>
+                      )
 
-                    ))}
+                    })}
                   </div>
                 ) : (
 
