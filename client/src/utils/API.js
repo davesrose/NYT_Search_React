@@ -11,6 +11,7 @@ export default {
   	return axios.get("/api/saved");
   },
   deleteArticle: function(id) {
-  	return axios.post("/api/saved/"+id);
+  	return axios.delete("/api/saved/"+id);
   }
+  // Gets all books
 };
