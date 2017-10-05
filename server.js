@@ -24,7 +24,7 @@ mongoose.Promise = global.Promise;
 // );
 if(process.env.NODE_ENV == 'production'){
   // Gotten using `heroku config | grep MONGODB_URI` command in Command Line
-  mongoose.connect('mongodb://heroku_cmzj4q92:n44bd5kh4dnmiphe83cv3f3f58@ds161304.mlab.com:61304/heroku_cmzj4q92');
+  mongoose.connect('mongodb://heroku_147d5wzc:i1nrje00p8eachmef6qk0e9ttk@ds161164.mlab.com:61164/heroku_147d5wzc');
 }
 else{
   mongoose.connect('mongodb://localhost/nytreact');
