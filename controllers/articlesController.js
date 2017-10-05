@@ -1,6 +1,6 @@
 const db = require("../models");
 
-// Defining methods for the booksController
+// Defining methods for the articlesController, using the article model: which includes article title, url, and saved date
 module.exports = {
   findAll: function(req, res) {
     db.Article

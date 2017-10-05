@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NYTContainer from "./components/NYTContainer";
 import NoMatch from "./pages/NoMatch";
 
+//within containg element, include router elements for being able to handle router calls
 const App = () =>
   <Router>
     <div>

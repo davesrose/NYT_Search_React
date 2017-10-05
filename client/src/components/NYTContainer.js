@@ -48,11 +48,12 @@ class NYTContainer extends Component {
     url: ""
   };
 
-  // When this component mounts, search for the movie "The Matrix"
+  // When this component mounts, search for default value "US News"
   componentDidMount() {
     this.searchArticles("US News");
   }
 
+  //query event for storing first 5 responses of the articles, and reset search, startYear, and endYear back to empty
   searchArticles = (query) => {
     API.search(query)
       .then(res => {
@@ -66,11 +67,8 @@ class NYTContainer extends Component {
       .catch(err => console.log(err));
   };
 
+  //update input change of search component
   handleInputChange = event => {
-    //  const { name, value } = event.target;
-    // this.setState({
-    //   [name]: value
-    // });
      const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -80,7 +78,7 @@ class NYTContainer extends Component {
     });
   };
 
-  // When the form is submitted, search the OMDB API for the value of `this.state.search`
+  // When the form is submitted, search the NYT API for the value of `this.state.search`, and add startYear and endYear values if present
   handleFormSubmit = event => {
     event.preventDefault();
     // let optionalSearch = this.state.search+`&begin_date=${this.state.startYear}0101&end_date=${this.state.endYear}0101`;
@@ -90,6 +88,7 @@ class NYTContainer extends Component {
     this.setState({ search: "" })
   };
 
+  //method for saving an article through axios and express routing.  Note that saved date is the current date formatted in moment
   saveArticle = data => {
     API.saveArticle({
       title : this.state.result[data].headline.main,
@@ -100,6 +99,7 @@ class NYTContainer extends Component {
       .catch(err => console.log(err));
   }
 
+  //method for setting articles that have been saved to database to be rendered in the saved articles container
   loadArticles = () => {
     API.getArticles()
       .then(res =>
@@ -108,6 +108,7 @@ class NYTContainer extends Component {
       .catch(err => console.log(err));
   };
 
+  //method for deleting particular id of mongodb document
   deleteArticle = id => {
     API.deleteArticle(id)
       .then(res => this.loadArticles())
